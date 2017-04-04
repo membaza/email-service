@@ -31,8 +31,8 @@ public final class TemplateController {
         mongo.insert(template);
     }
 
-    @GetMapping
-    Template getTemplateByName(String name) {
+    @GetMapping("/{name}")
+    Template getTemplateByName(@PathVariable String name) {
         return mongo.findOne(query(where("name").is(name)), Template.class);
     }
 
