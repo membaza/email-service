@@ -20,7 +20,7 @@ import static org.springframework.data.mongodb.core.query.Query.query;
  * @since 1.0.0
  */
 @Configuration
-public final class AuthConfig extends GlobalAuthenticationConfigurerAdapter {
+public class AuthConfig extends GlobalAuthenticationConfigurerAdapter {
 
     private final MongoTemplate mongo;
 
