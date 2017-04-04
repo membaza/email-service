@@ -3,14 +3,35 @@ Create simple but beautiful email templates and send email using REST. The idea 
 Integrates seamlessly with [Mail Gun](https://www.mailgun.com/).
 
 ## Features
+* RESTful
 * Responsive HTML
 * Dynamic Templates
 * Global Variables
 * Conditional Expressions
 * Internationalization
+* Fine-grained Permissions
+
+## Setup
+To set up the initial user (with all permissions set), run the jar file like this:
+```shell
+java -jar email-service.jar --init -u admin -p password
+```
+The user will be saved in the MongoDB database so it doesn't have to be created each time.
+
+A configuration file is also required to let the service connect to the MongoDB database and the RailGun API. Create a file in the same folder as the `.jar`-file called `application.properties` with the following content:
+```properties
+# MongoDB Settings
+spring.data.mongodb.database = emaildb
+spring.data.mongodb.host     = localhost
+spring.data.mongodb.port     = 27017
+
+# MailChimp Settings
+mailgun.apiKey =
+mailgun.domain =
+```
 
 ## API Examples
-Here are some examples on how to use the service.
+Here are some examples on how to use the service. All commands require a valid API Key to be specified using Basic Authentication. 
 
 ### Set Option
 Define global variables to be used in all templates:
