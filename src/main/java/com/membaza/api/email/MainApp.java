@@ -31,6 +31,8 @@ public class MainApp implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         if (Stream.of(args).anyMatch("--init"::equals)) {
+            System.out.println("Creating API Key...");
+
             String username = DEFAULT_USERNAME;
             String password = DEFAULT_PASSWORD;
 
@@ -54,6 +56,8 @@ public class MainApp implements CommandLineRunner {
             key.setAuthorities(EnumSet.allOf(Privilege.class));
 
             keysController.createApiKey(key);
+
+            System.out.println("API Key " + username + ":" + password + " created.");
         } else if (Stream.of(args).anyMatch(this::isHelp)) {
             printHelp();
         }
