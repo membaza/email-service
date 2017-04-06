@@ -3,17 +3,16 @@ package com.membaza.api.email.controller;
 import com.membaza.api.email.persistence.Template;
 import com.mongodb.DuplicateKeyException;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.membaza.api.email.util.ControllerUtil.byName;
 import static com.membaza.api.email.util.ResponseEntityUtil.created;
 import static java.util.Objects.requireNonNull;
-import static org.springframework.data.mongodb.core.query.Criteria.where;
-import static org.springframework.data.mongodb.core.query.Query.query;
 import static org.springframework.http.HttpStatus.CONFLICT;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.ResponseEntity.*;
 
 /**
@@ -56,11 +55,7 @@ public final class TemplateController {
     @GetMapping("/{name}")
     ResponseEntity<Template> getTemplateByName(@PathVariable String name) {
         final Template template = findByName(name);
-        if (template == null) {
-            return notFound().build();
-        } else {
-            return ok(template);
-        }
+        return template == null ? notFound().build() : ok(template);
     }
 
     @GetMapping
@@ -72,11 +67,11 @@ public final class TemplateController {
     @ResponseStatus(value = CONFLICT, reason = "A template with that name already exists")
     public void duplicateKeyException() {}
 
+    @ExceptionHandler(NullPointerException.class)
+    @ResponseStatus(value = NOT_FOUND, reason = "Could not find any template with that name.")
+    public void nullPointerException() {}
+
     private Template findByName(String name) {
         return mongo.findOne(byName(name), Template.class);
-    }
-
-    private Query byName(String name) {
-        return query(where("name").is(name));
     }
 }
