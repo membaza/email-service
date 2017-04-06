@@ -11,6 +11,10 @@ import static org.springframework.data.mongodb.core.query.Query.query;
  */
 public final class ControllerUtil {
 
+    public static Query byKey(String key) {
+        return query(where("key").is(key));
+    }
+
     public static Query byName(String name) {
         return query(where("name").is(name));
     }

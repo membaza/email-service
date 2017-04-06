@@ -24,7 +24,7 @@ import static java.util.stream.Collectors.toSet;
 @Data
 @Document(collection = "apikeys")
 @EqualsAndHashCode(callSuper = false)
-@JsonIgnoreProperties("password")
+@JsonIgnoreProperties({"id", "password"})
 public final class ApiKey implements UserDetails {
 
     private @Id String id;
