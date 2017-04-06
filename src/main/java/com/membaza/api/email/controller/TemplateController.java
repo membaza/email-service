@@ -3,6 +3,7 @@ package com.membaza.api.email.controller;
 import com.membaza.api.email.persistence.Template;
 import com.mongodb.DuplicateKeyException;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,20 +39,14 @@ public final class TemplateController {
     @PutMapping("/{name}")
     ResponseEntity<Void> updateTemplate(@PathVariable String name,
                         @RequestBody Template template) {
-
-        final String id = mongo.findOne(
-            query(where("name").is(name)),
-            Template.class
-        ).getId();
-
-        template.setId(id);
+        template.setId(findByName(name).getId());
         mongo.save(template);
         return accepted().build();
     }
 
     @DeleteMapping("/{name}")
     ResponseEntity<Void> deleteTemplate(@PathVariable String name) {
-        if (!mongo.remove(query(where("name").is(name)), Template.class).isUpdateOfExisting()) {
+        if (!mongo.remove(byName(name), Template.class).isUpdateOfExisting()) {
             return notFound().build();
         } else {
             return noContent().build();
@@ -78,6 +73,10 @@ public final class TemplateController {
     public void duplicateKeyException() {}
 
     private Template findByName(String name) {
-        return mongo.findOne(query(where("name").is(name)), Template.class);
+        return mongo.findOne(byName(name), Template.class);
+    }
+
+    private Query byName(String name) {
+        return query(where("name").is(name));
     }
 }
