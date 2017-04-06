@@ -62,7 +62,7 @@ public final class SendController {
         email.setRecipients(posted.getRecipients());
         email.setArgs(ofNullable(posted.getArgs()).orElseGet(HashMap::new));
 
-        mongo.save(email);
+        mongo.insert(email);
         return createdWithId(email.getId());
     }
 

@@ -42,7 +42,7 @@ public final class OptionsController {
         final Option option = new Option();
         option.setName(key);
         option.setValue(posted.getValue());
-        mongo.save(option);
+        mongo.insert(option);
         return createdWithName(option.getName());
     }
 

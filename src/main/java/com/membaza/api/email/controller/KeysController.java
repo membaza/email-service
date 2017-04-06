@@ -85,7 +85,7 @@ public final class KeysController {
         key.setName(ofNullable(posted.getName()).orElse(name));
         key.setPassword(encoder.encode(posted.getPassword()));
         key.setAuthorities(ofNullable(posted.getAuthorities()).orElseGet(HashSet::new));
-        mongo.save(key);
+        mongo.insert(key);
 
         return accepted().build();
     }
