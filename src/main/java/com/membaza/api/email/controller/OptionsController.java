@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-import static com.membaza.api.email.util.ControllerUtil.byKey;
-import static com.membaza.api.email.util.ResponseEntityUtil.created;
+import static com.membaza.api.email.util.ControllerUtil.byName;
+import static com.membaza.api.email.util.ResponseEntityUtil.createdWithName;
 import static java.util.Objects.requireNonNull;
 import static org.springframework.data.mongodb.core.query.Update.update;
 import static org.springframework.http.HttpStatus.*;
@@ -34,22 +34,22 @@ public final class OptionsController {
 
     @PostMapping
     ResponseEntity<Void> createOption(@RequestBody PostedOption posted) {
-        final String key = posted.getKey();
+        final String key = posted.getName();
         if (key == null) {
-            throw new IllegalArgumentException("No key specified.");
+            throw new IllegalArgumentException("No name specified.");
         }
 
         final Option option = new Option();
-        option.setKey(key);
+        option.setName(key);
         option.setValue(posted.getValue());
         mongo.save(option);
-        return created(option.getKey());
+        return createdWithName(option.getName());
     }
 
-    @PutMapping("/{key}")
+    @PutMapping("/{name}")
     ResponseEntity<Void> updateOption(@PathVariable String key,
                                       @RequestBody PostedOption option) {
-        if (mongo.updateFirst(byKey(key), update("value", option.getValue()), Option.class)
+        if (mongo.updateFirst(byName(key), update("value", option.getValue()), Option.class)
                 .isUpdateOfExisting()) {
             return accepted().build();
         } else {
@@ -57,18 +57,18 @@ public final class OptionsController {
         }
     }
 
-    @DeleteMapping("/{key}")
-    ResponseEntity<Void> deleteOption(@PathVariable String key) {
-        if (mongo.remove(byKey(key), Option.class).isUpdateOfExisting()) {
+    @DeleteMapping("/{name}")
+    ResponseEntity<Void> deleteOption(@PathVariable String name) {
+        if (mongo.remove(byName(name), Option.class).isUpdateOfExisting()) {
             return noContent().build();
         } else {
             return notFound().build();
         }
     }
 
-    @GetMapping("/{key}")
-    ResponseEntity<Option> getOptionByKey(@PathVariable String key) {
-        final Option option = mongo.findOne(byKey(key), Option.class);
+    @GetMapping("/{name}")
+    ResponseEntity<Option> getOptionByName(@PathVariable String name) {
+        final Option option = mongo.findOne(byName(name), Option.class);
         return option == null ? notFound().build() : ok(option);
     }
 
@@ -78,7 +78,7 @@ public final class OptionsController {
     }
 
     @ExceptionHandler(DuplicateKeyException.class)
-    @ResponseStatus(value = CONFLICT, reason = "An option with that key already exists")
+    @ResponseStatus(value = CONFLICT, reason = "An option with that name already exists")
     public void duplicateKeyException() {}
 
     @ExceptionHandler(IllegalArgumentException.class)
@@ -87,7 +87,7 @@ public final class OptionsController {
 
     @Data
     private static final class PostedOption {
-        private String key;
+        private String name;
         private @NotNull String value;
     }
 }

@@ -36,7 +36,7 @@ Here are some examples on how to use the service. All commands require a valid A
 ### Set Option
 Define global variables to be used in all templates:
 
-`POST /options/{key}`
+`POST /options/{name}`
 ```json
 {
     "value" : "..."

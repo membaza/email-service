@@ -28,13 +28,9 @@ import static java.util.stream.Collectors.toSet;
 public final class ApiKey implements UserDetails {
 
     private @Id String id;
-    private @Indexed(unique = true) String username;
+    private @Indexed(unique = true) String name;
     private @NotNull String password;
     private Set<Privilege> authorities;
-
-    public boolean has(Privilege privilege) {
-        return authorities.contains(privilege);
-    }
 
     @Override @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -43,6 +39,9 @@ public final class ApiKey implements UserDetails {
             .map(SimpleGrantedAuthority::new)
             .collect(toSet());
     }
+
+    @Override @JsonIgnore
+    public String getUsername() { return name; }
 
     @Override @JsonIgnore
     public boolean isAccountNonExpired() {

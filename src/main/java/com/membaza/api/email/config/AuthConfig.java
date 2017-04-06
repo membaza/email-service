@@ -41,7 +41,7 @@ public class AuthConfig extends GlobalAuthenticationConfigurerAdapter {
     @Bean
     public UserDetailsService getUserDetailsService() {
         return username -> mongo.findOne(
-            query(where("username").is(username)),
+            query(where("name").is(username)),
             ApiKey.class
         );
     }

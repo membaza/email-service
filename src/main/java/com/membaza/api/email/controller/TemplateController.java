@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import static com.membaza.api.email.util.ControllerUtil.byName;
-import static com.membaza.api.email.util.ResponseEntityUtil.created;
+import static com.membaza.api.email.util.ResponseEntityUtil.createdWithName;
 import static java.util.Objects.requireNonNull;
 import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -32,7 +32,7 @@ public final class TemplateController {
     @PostMapping
     ResponseEntity<Void> createTemplate(@RequestBody Template template) {
         mongo.insert(template);
-        return created(template.getName());
+        return createdWithName(template.getName());
     }
 
     @PutMapping("/{name}")

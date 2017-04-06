@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
 public final class Option {
 
     private @Id String id;
-    private @Indexed(unique=true) String key;
+    private @Indexed(unique=true) String name;
     private @NotNull String value;
 
 }

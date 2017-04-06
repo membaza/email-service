@@ -51,7 +51,7 @@ public class MainApp implements CommandLineRunner {
             }
 
             final KeysController.PostedKey key = new KeysController.PostedKey();
-            key.setUsername(username);
+            key.setName(username);
             key.setPassword(password);
             key.setAuthorities(EnumSet.allOf(Privilege.class));
 
@@ -69,8 +69,8 @@ public class MainApp implements CommandLineRunner {
 
     private void printHelp() {
         System.out.println("The following parameters can be specified:");
-        System.out.println("  --init (-u [username]) (-p [password])");
-        System.out.println("      Default username: " + DEFAULT_USERNAME);
+        System.out.println("  --init (-u [name]) (-p [password])");
+        System.out.println("      Default name: " + DEFAULT_USERNAME);
         System.out.println("      Default password: " + DEFAULT_PASSWORD);
         System.exit(0);
     }

@@ -16,8 +16,7 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import static com.membaza.api.email.util.ControllerUtil.byName;
-import static com.membaza.api.email.util.ControllerUtil.byUsername;
-import static com.membaza.api.email.util.ResponseEntityUtil.created;
+import static com.membaza.api.email.util.ResponseEntityUtil.createdWithName;
 import static java.util.Objects.requireNonNull;
 import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.toSet;
@@ -47,11 +46,11 @@ public final class KeysController {
 
     @PostMapping
     public ResponseEntity<Void> createApiKey(@RequestBody PostedKey posted) {
-        final String username = posted.getUsername();
+        final String name     = posted.getName();
         final String password = posted.getPassword();
 
-        if (username == null || "".equals(username)) {
-            throw new IllegalArgumentException("An username must be specified");
+        if (name == null || "".equals(name)) {
+            throw new IllegalArgumentException("An name must be specified");
         }
 
         if (password == null || "".equals(password)) {
@@ -59,22 +58,22 @@ public final class KeysController {
         }
 
         final ApiKey key = new ApiKey();
-        key.setUsername(posted.getUsername());
+        key.setName(posted.getName());
         key.setPassword(encoder.encode(password));
         key.setAuthorities(ofNullable(posted.getAuthorities()).orElseGet(this::defaultPrivileges));
 
         mongo.insert(key);
-        return created(key.getUsername());
+        return createdWithName(key.getUsername());
     }
 
-    @PutMapping("/{username}")
-    public ResponseEntity<Void> updateApiKey(@PathVariable String username,
+    @PutMapping("/{name}")
+    public ResponseEntity<Void> updateApiKey(@PathVariable String name,
                                              @RequestBody PostedKey posted) {
 
         final String password = posted.getPassword();
 
-        if (username == null || "".equals(username)) {
-            throw new IllegalArgumentException("An username must be specified");
+        if (name == null || "".equals(name)) {
+            throw new IllegalArgumentException("An name must be specified");
         }
 
         if (password == null || "".equals(password)) {
@@ -82,8 +81,8 @@ public final class KeysController {
         }
 
         final ApiKey key = new ApiKey();
-        key.setId(findByUsername(username).getId());
-        key.setUsername(ofNullable(posted.getUsername()).orElse(username));
+        key.setId(findByName(name).getId());
+        key.setName(ofNullable(posted.getName()).orElse(name));
         key.setPassword(encoder.encode(posted.getPassword()));
         key.setAuthorities(ofNullable(posted.getAuthorities()).orElseGet(HashSet::new));
         mongo.save(key);
@@ -91,9 +90,9 @@ public final class KeysController {
         return accepted().build();
     }
 
-    @DeleteMapping("/{username}")
+    @DeleteMapping("/{name}")
     public ResponseEntity<Void> deleteApiKey(@PathVariable String username) {
-        if (!mongo.remove(byUsername(username), ApiKey.class).isUpdateOfExisting()) {
+        if (!mongo.remove(byName(username), ApiKey.class).isUpdateOfExisting()) {
             return notFound().build();
         } else {
             return noContent().build();
@@ -102,7 +101,7 @@ public final class KeysController {
 
     @GetMapping("/{name}")
     public ResponseEntity<ApiKey> getApiKeyByName(@PathVariable String name) {
-        final ApiKey key = mongo.findOne(byUsername(name), ApiKey.class);
+        final ApiKey key = findByName(name);
         return key == null ? notFound().build() : ok(key);
     }
 
@@ -112,11 +111,11 @@ public final class KeysController {
     }
 
     @ExceptionHandler(DuplicateKeyException.class)
-    @ResponseStatus(value = CONFLICT, reason = "The specified key already exists")
+    @ResponseStatus(value = CONFLICT, reason = "The specified name already exists")
     public void duplicateKeyException() {}
 
     @ExceptionHandler(NullPointerException.class)
-    @ResponseStatus(value = NOT_FOUND, reason = "Could not find any apiKey with that username.")
+    @ResponseStatus(value = NOT_FOUND, reason = "Could not find any apiKey with that name.")
     public void nullPointerException() {}
 
     @ExceptionHandler(IllegalArgumentException.class)
@@ -125,7 +124,7 @@ public final class KeysController {
 
     @Data
     public static class PostedKey {
-        private String username;
+        private String name;
         private String password;
         private Set<Privilege> authorities;
     }
@@ -138,7 +137,7 @@ public final class KeysController {
             .collect(toSet());
     }
 
-    private ApiKey findByUsername(String username) {
+    private ApiKey findByName(String username) {
         return mongo.findOne(byName(username), ApiKey.class);
     }
 }
