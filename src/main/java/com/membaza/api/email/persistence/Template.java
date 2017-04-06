@@ -27,8 +27,7 @@ public final class Template {
 
     private @NotNull EmailAddress sender;
     private EmailAddress replyTo;
+    private @NotNull List<Box> content;
 
-    private List<Map<String, Map<String, String>>> languages;
-    private List<Box> content;
-
+    private Map<String, Map<String, String>> languages;
 }

@@ -11,5 +11,6 @@ public final class EmailAddress {
 
     private String name;
     private String address;
+    private String language;
 
 }
