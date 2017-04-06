@@ -1,5 +1,6 @@
 package com.membaza.api.email.persistence;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.membaza.api.email.email.Box;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -16,6 +17,7 @@ import java.util.Map;
  */
 @Data
 @Document(collection = "templates")
+@JsonIgnoreProperties("id")
 public final class Template {
 
     private @Id String id;
