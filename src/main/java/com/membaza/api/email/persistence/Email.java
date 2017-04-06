@@ -21,7 +21,9 @@ public final class Email {
     private @NotNull Date timestamp;
     private @NotNull EmailStatus status;
     private @NotNull String template;
-    private @NotNull List<Email> recipients;
+    private @NotNull String language;
+    private @NotNull List<EmailAddress> recipients;
     private @NotNull Map<String, String> args;
+    private String error;
 
 }

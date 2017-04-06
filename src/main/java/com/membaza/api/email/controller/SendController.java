@@ -1,6 +1,7 @@
 package com.membaza.api.email.controller;
 
 import com.membaza.api.email.persistence.Email;
+import com.membaza.api.email.persistence.EmailAddress;
 import com.membaza.api.email.persistence.Template;
 import lombok.Data;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -104,7 +105,7 @@ public final class SendController {
     @Data
     private static final class PostedEmail {
         private @NotNull String template;
-        private @NotNull List<Email> recipients;
+        private @NotNull List<EmailAddress> recipients;
         private Map<String, String> args;
     }
 }
