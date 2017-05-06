@@ -15,6 +15,8 @@ import static com.membaza.api.email.email.ModelType.BUTTON;
 import static com.membaza.api.email.email.ModelType.TEXT;
 
 /**
+ * Default implementation of the {@link RenderService} interface.
+ *
  * @author Emil Forslund
  * @since 1.0.0
  */
@@ -30,8 +32,8 @@ public final class RenderServiceImpl implements RenderService {
     }
 
     @Override
-    public String render(Model model, UnaryOperator<String> argumentResolver) {
-        return viewFor(model).render(model, argumentResolver, this);
+    public String render(Model model, UnaryOperator<String> argRes) {
+        return viewFor(model).render(model, argRes, this);
     }
 
     @SuppressWarnings("unchecked")

@@ -109,14 +109,18 @@ public final class SenderService {
                     load(BEFORE_FILE).map(resolver).forEachOrdered(content::add);
 
                     template.getContent().stream()
-                        .map(box -> renderer.render(box, resolver))
+                        .map(model -> renderer.render(model, resolver))
                         .forEachOrdered(content::add);
 
                     load(AFTER_FILE).map(resolver).forEachOrdered(content::add);
 
                     final String html = content.toString();
                     try {
-                        send(subject, recipient.getName(), recipient.getAddress(), html);
+                        send(subject,
+                            recipient.getName(),
+                            recipient.getAddress(),
+                            html
+                        );
                     } catch (final MailDeliveryException ex) {
                         email.setStatus(FAILURE);
                         email.setError(ex.getMessage());
@@ -141,7 +145,11 @@ public final class SenderService {
         }
     }
 
-    private String resolve(String text, String lang, Email email, Map<String, String> dictionary) {
+    private String resolve(String text,
+                           String lang,
+                           Email email,
+                           Map<String, String> dictionary) {
+
         final StringBuilder result = new StringBuilder();
         final Matcher matcher = PATTERN.matcher(text);
         int origin = 0;
