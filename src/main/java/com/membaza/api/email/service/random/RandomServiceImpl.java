@@ -7,6 +7,9 @@ import java.security.SecureRandom;
 import static java.util.Objects.requireNonNull;
 
 /**
+ * Default implementation of the {@link RandomService} interface that uses the
+ * {@link SecureRandom} class internally to generate random sequences.
+ *
  * @author Emil Forslund
  * @since  1.0.0
  */

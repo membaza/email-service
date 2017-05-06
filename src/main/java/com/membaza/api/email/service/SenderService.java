@@ -40,6 +40,10 @@ import static org.springframework.data.mongodb.core.query.Query.query;
 import static org.springframework.data.mongodb.core.query.Update.update;
 
 /**
+ * Service that sends emails by loading the appropriate template, translating it
+ * into the preferred language and sending it using Mail Gun. The service is
+ * scheduled to execute batches every second.
+ *
  * @author Emil Forslund
  * @since  1.0.0
  */
@@ -47,7 +51,7 @@ import static org.springframework.data.mongodb.core.query.Update.update;
 @EnableScheduling
 public final class SenderService {
 
-    private static final Pattern PATTERN = Pattern.compile("\\$\\{([^$]*)}");
+    private static final Pattern PATTERN    = Pattern.compile("\\$\\{([^$]*)}");
     private static final String BEFORE_FILE = "/html/email_before.html",
                                 AFTER_FILE  = "/html/email_after.html";
 
@@ -56,7 +60,7 @@ public final class SenderService {
     private final Environment env;
     private final RestTemplate mailgun;
 
-    public SenderService(MongoTemplate mongo,
+    SenderService(MongoTemplate mongo,
                          RenderService renderer,
                          Environment env) {
 
