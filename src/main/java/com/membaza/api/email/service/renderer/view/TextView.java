@@ -1,6 +1,6 @@
 package com.membaza.api.email.service.renderer.view;
 
-import com.membaza.api.email.email.box.Text;
+import com.membaza.api.email.email.model.Text;
 import com.membaza.api.email.service.renderer.RenderService;
 
 import java.util.function.UnaryOperator;

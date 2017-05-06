@@ -1,7 +1,7 @@
 package com.membaza.api.email.email;
 
-import com.membaza.api.email.email.box.Button;
-import com.membaza.api.email.email.box.Text;
+import com.membaza.api.email.email.model.Button;
+import com.membaza.api.email.email.model.Text;
 import com.mongodb.DBObject;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;
@@ -27,7 +27,7 @@ public final class ModelConverter implements Converter<DBObject, Model> {
         }
 
         throw new UnsupportedOperationException(
-            "Unsupported box type '" + type + "'."
+            "Unsupported model type '" + type + "'."
         );
     }
 

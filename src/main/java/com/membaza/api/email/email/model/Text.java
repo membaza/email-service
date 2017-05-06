@@ -1,4 +1,4 @@
-package com.membaza.api.email.email.box;
+package com.membaza.api.email.email.model;
 
 import com.membaza.api.email.email.Model;
 import com.membaza.api.email.email.ModelType;
