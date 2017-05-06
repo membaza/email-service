@@ -16,6 +16,8 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.ResponseEntity.*;
 
 /**
+ * Controller for the {@code /email/templates} endpoints.
+ *
  * @author Emil Forslund
  * @since  1.0.0
  */
@@ -25,7 +27,7 @@ public final class TemplateController {
 
     private final MongoTemplate mongo;
 
-    public TemplateController(MongoTemplate mongo) {
+    TemplateController(MongoTemplate mongo) {
         this.mongo = requireNonNull(mongo);
     }
 
@@ -65,11 +67,11 @@ public final class TemplateController {
 
     @ExceptionHandler(DuplicateKeyException.class)
     @ResponseStatus(value = CONFLICT, reason = "A template with that name already exists")
-    public void duplicateKeyException() {}
+    void duplicateKeyException() {}
 
     @ExceptionHandler(NullPointerException.class)
     @ResponseStatus(value = NOT_FOUND, reason = "Could not find any template with that name.")
-    public void nullPointerException() {}
+    void nullPointerException() {}
 
     private Template findByName(String name) {
         return mongo.findOne(byName(name), Template.class);

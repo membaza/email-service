@@ -24,6 +24,8 @@ import static org.springframework.http.HttpStatus.*;
 import static org.springframework.http.ResponseEntity.*;
 
 /**
+ * Controller for the {@code /email/keys} endpoints.
+ *
  * @author Emil Forslund
  * @since  1.0.0
  */
@@ -35,9 +37,9 @@ public final class KeysController {
     private final MongoTemplate mongo;
     private final PasswordEncoder encoder;
 
-    public KeysController(Environment env,
-                          MongoTemplate mongo,
-                          PasswordEncoder encoder) {
+    KeysController(Environment env,
+                   MongoTemplate mongo,
+                   PasswordEncoder encoder) {
 
         this.env     = requireNonNull(env);
         this.mongo   = requireNonNull(mongo);
@@ -45,7 +47,7 @@ public final class KeysController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createApiKey(@RequestBody PostedKey posted) {
+    ResponseEntity<Void> createApiKey(@RequestBody PostedKey posted) {
         final String name     = posted.getName();
         final String password = posted.getPassword();
 
@@ -67,7 +69,7 @@ public final class KeysController {
     }
 
     @PutMapping("/{name}")
-    public ResponseEntity<Void> updateApiKey(@PathVariable String name,
+    ResponseEntity<Void> updateApiKey(@PathVariable String name,
                                              @RequestBody PostedKey posted) {
 
         final String password = posted.getPassword();
@@ -91,7 +93,7 @@ public final class KeysController {
     }
 
     @DeleteMapping("/{name}")
-    public ResponseEntity<Void> deleteApiKey(@PathVariable String username) {
+    ResponseEntity<Void> deleteApiKey(@PathVariable String username) {
         if (!mongo.remove(byName(username), ApiKey.class).isUpdateOfExisting()) {
             return notFound().build();
         } else {
@@ -100,27 +102,27 @@ public final class KeysController {
     }
 
     @GetMapping("/{name}")
-    public ResponseEntity<ApiKey> getApiKeyByName(@PathVariable String name) {
+    ResponseEntity<ApiKey> getApiKeyByName(@PathVariable String name) {
         final ApiKey key = findByName(name);
         return key == null ? notFound().build() : ok(key);
     }
 
     @GetMapping
-    public List<ApiKey> getApiKeys() {
+    List<ApiKey> getApiKeys() {
         return mongo.findAll(ApiKey.class);
     }
 
     @ExceptionHandler(DuplicateKeyException.class)
     @ResponseStatus(value = CONFLICT, reason = "The specified name already exists")
-    public void duplicateKeyException() {}
+    void duplicateKeyException() {}
 
     @ExceptionHandler(NullPointerException.class)
     @ResponseStatus(value = NOT_FOUND, reason = "Could not find any apiKey with that name.")
-    public void nullPointerException() {}
+    void nullPointerException() {}
 
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(value = BAD_REQUEST)
-    public void illegalArgumentException() {}
+    void illegalArgumentException() {}
 
     @Data
     public static class PostedKey {

@@ -18,6 +18,7 @@ import static org.springframework.http.HttpStatus.*;
 import static org.springframework.http.ResponseEntity.*;
 
 /**
+ * Controller for the {@code /email/options} endpoints.
  *
  * @author Emil Forslund
  * @since  1.0.0
@@ -28,7 +29,7 @@ public final class OptionsController {
 
     private final MongoTemplate mongo;
 
-    public OptionsController(MongoTemplate mongo) {
+    OptionsController(MongoTemplate mongo) {
         this.mongo = requireNonNull(mongo);
     }
 
@@ -79,11 +80,11 @@ public final class OptionsController {
 
     @ExceptionHandler(DuplicateKeyException.class)
     @ResponseStatus(value = CONFLICT, reason = "An option with that name already exists")
-    public void duplicateKeyException() {}
+    void duplicateKeyException() {}
 
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(value = BAD_REQUEST)
-    public void illegalArgumentException() {}
+    void illegalArgumentException() {}
 
     @Data
     private static final class PostedOption {

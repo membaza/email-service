@@ -25,8 +25,10 @@ import static org.springframework.http.ResponseEntity.notFound;
 import static org.springframework.http.ResponseEntity.ok;
 
 /**
+ * Controller for the {@code /email/send} endpoints.
+ *
  * @author Emil Forslund
- * @since 1.0.0
+ * @since  1.0.0
  */
 @RestController
 @RequestMapping("/email/send")
@@ -35,7 +37,7 @@ public final class SendController {
     private final MongoTemplate mongo;
     private final TemplateController templates;
 
-    public SendController(MongoTemplate mongo, TemplateController templates) {
+    SendController(MongoTemplate mongo, TemplateController templates) {
         this.mongo     = requireNonNull(mongo);
         this.templates = requireNonNull(templates);
     }
@@ -100,7 +102,7 @@ public final class SendController {
 
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(value = BAD_REQUEST)
-    public void illegalArgumentException() {}
+    void illegalArgumentException() {}
 
     @Data
     private static final class PostedEmail {
