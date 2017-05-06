@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Email that is either about to be sent or that has already been sent and now
+ * exist for statistical or debugging purposes.
+ *
  * @author Emil Forslund
  * @since  1.0.0
  */

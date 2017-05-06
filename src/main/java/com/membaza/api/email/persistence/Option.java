@@ -9,6 +9,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import javax.validation.constraints.NotNull;
 
 /**
+ * User defined option to store in the email database. Options can be parsed
+ * when rendering templates into HTML.
+ *
  * @author Emil Forslund
  * @since  1.0.0
  */

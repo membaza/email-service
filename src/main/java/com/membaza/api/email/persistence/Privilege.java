@@ -1,8 +1,10 @@
 package com.membaza.api.email.persistence;
 
 /**
+ * Privilege to do something with this service.
+ *
  * @author Emil Forslund
- * @since 1.0.0
+ * @since  1.0.0
  */
 public enum Privilege {
 

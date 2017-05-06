@@ -12,8 +12,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Template for a language complete with translations of all the keywords used
+ * in the content.
+ *
  * @author Emil Forslund
- * @since 1.0.0
+ * @since  1.0.0
  */
 @Data
 @Document(collection = "templates")

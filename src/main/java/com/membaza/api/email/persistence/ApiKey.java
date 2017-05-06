@@ -18,6 +18,8 @@ import java.util.Set;
 import static java.util.stream.Collectors.toSet;
 
 /**
+ * Key that is used to authorize requests to the REST API.
+ *
  * @author Emil Forslund
  * @since 1.0.0
  */
