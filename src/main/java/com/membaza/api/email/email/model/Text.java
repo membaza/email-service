@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
+ * {@link Model} representing a regular paragraph of text.
+ *
  * @author Emil Forslund
  * @since 1.0.0
  */

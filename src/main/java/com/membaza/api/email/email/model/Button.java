@@ -6,8 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
+ * {@link Model} representing a large, clickable button.
+ *
  * @author Emil Forslund
- * @since 1.0.0
+ * @since  1.0.0
  */
 @Data @AllArgsConstructor
 public final class Button implements Model {

@@ -7,8 +7,11 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;
 
 /**
+ * Converts a MongoDB object into a {@link Model}. The exact implementation will
+ * depend on the {@link Model#getType() type} field.
+ *
  * @author Emil Forslund
- * @since 1.0.0
+ * @since  1.0.0
  */
 @ReadingConverter
 public final class ModelConverter implements Converter<DBObject, Model> {
