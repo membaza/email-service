@@ -12,8 +12,15 @@ import java.util.stream.Stream;
 import static java.util.Objects.requireNonNull;
 
 /**
+ * The main entry point of the application. The following command line
+ * parameters are available:
+ * <ul>
+ *     <li>{@code --init (--u username) (--u password)} Create an API Key automatically, optionally with the specified username and password.</li>
+ *     <li>{@code --help} Show this help</li>
+ * </ul>
+ *
  * @author Emil Forslund
- * @since 1.0.0
+ * @since  1.0.0
  */
 @SpringBootApplication
 public class MainApp implements CommandLineRunner {
