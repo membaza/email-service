@@ -1,7 +1,7 @@
 package com.membaza.api.email.persistence;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.membaza.api.email.email.Box;
+import com.membaza.api.email.email.Model;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -25,9 +25,9 @@ public final class Template {
     @Indexed(unique = true)
     private @NotNull String name;
 
-    private @NotNull EmailAddress sender;
     private EmailAddress replyTo;
-    private @NotNull List<Box> content;
+    private @NotNull EmailAddress sender;
+    private @NotNull List<Model> content;
 
     private Map<String, Map<String, String>> languages;
 }

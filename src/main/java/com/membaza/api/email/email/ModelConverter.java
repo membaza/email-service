@@ -11,12 +11,12 @@ import org.springframework.data.convert.ReadingConverter;
  * @since 1.0.0
  */
 @ReadingConverter
-public final class BoxConverter implements Converter<DBObject, Box> {
+public final class ModelConverter implements Converter<DBObject, Model> {
 
     @Override
-    public Box convert(DBObject dbObject) {
+    public Model convert(DBObject dbObject) {
         final String type = dbObject.get("type").toString();
-        switch (BoxType.valueOf(type.toLowerCase())) {
+        switch (ModelType.valueOf(type.toLowerCase())) {
             case TEXT: return new Text(
                 stringOrElse(dbObject.get("value"), "")
             );

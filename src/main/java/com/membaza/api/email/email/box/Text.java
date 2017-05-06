@@ -1,7 +1,7 @@
 package com.membaza.api.email.email.box;
 
-import com.membaza.api.email.email.Box;
-import com.membaza.api.email.email.BoxType;
+import com.membaza.api.email.email.Model;
+import com.membaza.api.email.email.ModelType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -10,12 +10,12 @@ import lombok.Data;
  * @since 1.0.0
  */
 @Data @AllArgsConstructor
-public final class Text implements Box {
+public final class Text implements Model {
 
     private String value;
 
     @Override
-    public BoxType getType() {
-        return BoxType.TEXT;
+    public ModelType getType() {
+        return ModelType.TEXT;
     }
 }

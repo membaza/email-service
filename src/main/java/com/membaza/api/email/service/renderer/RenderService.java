@@ -1,6 +1,6 @@
 package com.membaza.api.email.service.renderer;
 
-import com.membaza.api.email.email.Box;
+import com.membaza.api.email.email.Model;
 
 import java.util.function.UnaryOperator;
 
@@ -10,6 +10,6 @@ import java.util.function.UnaryOperator;
  */
 public interface RenderService {
 
-    String render(Box box, UnaryOperator<String> argumentResolver);
+    String render(Model model, UnaryOperator<String> argumentResolver);
 
 }
